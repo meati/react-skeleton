@@ -35,7 +35,7 @@ class EditableItem extends Component {
   }
 
   onKeyPress(event) {
-    if(event.keyCode == 13) {
+    if(event.key == 'Enter') {
       this.onBlur(event);
     }
   }

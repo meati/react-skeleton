@@ -7,7 +7,7 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server",
     "build": "cross-env NODE_ENV=production webpack",
     "build-analize": "cross-env NODE_ENV=production BUILD_ANALYZE=true webpack",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "eslint": "./node_modules/.bin/eslint ./",
     "storybook": "cross-env NODE_ENV=development start-storybook -p 9030 -c .storybook"
   },
