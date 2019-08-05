@@ -105,6 +105,7 @@ if (process.env.NODE_ENV === 'production') {
     publicPath: config.output.publicPath,
     hot: true,
     historyApiFallback: true,
+    disableHostCheck: true,
     stats: {
       colors: true,
     },

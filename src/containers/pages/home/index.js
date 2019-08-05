@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import * as actions from '@store/actions';
-import Accordion from '@components/elements/accordion';
-import Button from '@components/elements/button';
 import LayoutPage from '@components/layouts/layout-page';
 import LayoutContent from '@components/layouts/layout-content';
 import HeaderContainer from '@containers/header-container';
+import EditableList from '@components/elements/editable-list';
+import { lists } from '@utils';
 
 class Home extends Component {
   static propTypes = {
@@ -15,30 +14,25 @@ class Home extends Component {
     history: PropTypes.object.isRequired,
   };
 
-  showInfo = () => {
-    this.props.dispatch(actions.modal.open('info')).then(result => {
-      console.log(result);
-    });
-  };
+  updateItem(item) {
+    this.props.dispatch(actions.list.update(item));
+    return Promise.resolve(item);
+  }
+
+  componentDidMount() {
+    this.props.dispatch(actions.list.get());
+  }
 
   render() {
+    const { tree } = this.props;
     return (
       <LayoutPage header={<HeaderContainer />}>
         <LayoutContent>
-          <h1>Главная страница</h1>
-          <p>
-            <Link to="/main">Раздел для авторизованных</Link>
-          </p>
-          <p>
-            <Button onClick={this.showInfo}>Показать модалку</Button>
-          </p>
-          <Accordion title={'Заголовок'}>
-            text for accordion, with other components, ex. <Button>Button</Button>
-          </Accordion>
+          <h1>Редактируемый список</h1>
+          { tree && <EditableList onUpdateItem={this.updateItem.bind(this)} items={tree}></EditableList> }
         </LayoutContent>
       </LayoutPage>
     );
   }
 }
-
-export default connect()(Home);
+export default connect(state=> ({ tree: state.list.tree }))(Home);
